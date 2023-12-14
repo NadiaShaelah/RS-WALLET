@@ -1,25 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
+import AuthRouter from './Pages/Auth/AuthRouter';
+import AppRouter from './Pages/App/AppRouter';
+import { useLocalStorage } from 'usehooks-ts'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  const [loggedUser, setLoggedUser] = useLocalStorage('loggedUser', undefined);
+
+  /**Si le localstorage est vite, le user s'inscrit avec AuthRouter, sinon il se connecte avec AppRouter */
+  if(loggedUser)
+    return <AppRouter />
+
+  return <AuthRouter />
 }
 
 export default App;
